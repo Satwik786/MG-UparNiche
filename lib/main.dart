@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'features/game/screens/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(const UparNicheApp());
 }
 
@@ -13,12 +18,6 @@ class UparNicheApp extends StatelessWidget {
     return MaterialApp(
       title: 'UparNiche',
       debugShowCheckedModeBanner: false,
-
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        scaffoldBackgroundColor: Colors.white,
-      ),
-
       home: const HomeScreen(),
     );
   }

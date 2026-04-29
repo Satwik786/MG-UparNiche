@@ -8,12 +8,12 @@ class SensorService {
 
   void startListening(Function(TiltDirection) onTilt) {
     _subscription = accelerometerEvents.listen((event) {
-      final y = event.y;
+      final y = event.y; // 🔥 use Y axis for forward/back tilt
 
-      if (y < -7) {
-        onTilt(TiltDirection.up);
-      } else if (y > 7) {
-        onTilt(TiltDirection.down);
+      if (y < -6) {
+        onTilt(TiltDirection.up); // ✅ Correct (forward tilt)
+      } else if (y > 6) {
+        onTilt(TiltDirection.down); // ❌ Skip (back tilt)
       } else {
         onTilt(TiltDirection.neutral);
       }

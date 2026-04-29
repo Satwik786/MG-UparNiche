@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import '../logic/game_controller.dart';
 import '../data/repositories/word_repository.dart';
 import '../logic/game_state.dart';
@@ -26,9 +28,14 @@ class _GameScreenState extends State<GameScreen> {
   int _countdown = 3;
   bool _gameStarted = false;
 
+  Color _bgColor = Colors.deepPurple;
+
   @override
   void initState() {
     super.initState();
+
+    // 🔥 Switch to LANDSCAPE for game
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
 
     _controller = GameController(WordRepository());
     _sensorService = SensorService();
@@ -74,17 +81,33 @@ class _GameScreenState extends State<GameScreen> {
 
   void _handleCorrect() {
     _canDetect = false;
+
+    setState(() {
+      _bgColor = Colors.green;
+    });
+
     _controller.markCorrect();
     _resetDetection();
   }
 
   void _handleSkip() {
     _canDetect = false;
+
+    setState(() {
+      _bgColor = Colors.red;
+    });
+
     _controller.skipWord();
     _resetDetection();
   }
 
   void _resetDetection() {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        _bgColor = Colors.deepPurple;
+      });
+    });
+
     Future.delayed(const Duration(milliseconds: 800), () {
       _canDetect = true;
     });
@@ -92,6 +115,9 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void dispose() {
+    // 🔥 Switch back to PORTRAIT
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     _controller.dispose();
     _sensorService.stopListening();
     _uiTimer?.cancel();
@@ -100,13 +126,20 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // 🔥 Countdown UI
+    // Countdown screen (landscape)
     if (!_gameStarted) {
       return Scaffold(
-        body: Center(
-          child: Text(
-            '$_countdown',
-            style: const TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
+        body: Container(
+          color: Colors.black,
+          child: Center(
+            child: Text(
+              '$_countdown',
+              style: const TextStyle(
+                fontSize: 100,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       );
@@ -114,7 +147,6 @@ class _GameScreenState extends State<GameScreen> {
 
     final GameState state = _controller.state;
 
-    // 🔥 Navigate to result screen
     if (state.isGameOver) {
       Future.microtask(() {
         Navigator.pushReplacement(
@@ -122,41 +154,56 @@ class _GameScreenState extends State<GameScreen> {
           MaterialPageRoute(builder: (_) => ResultScreen(state: state)),
         );
       });
-
       return const SizedBox();
     }
 
     final word = state.currentWord?.text ?? 'No Words';
 
     return Scaffold(
-      appBar: AppBar(title: const Text('UparNiche')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Timer
-          Text('Time: ${state.timeLeft}', style: const TextStyle(fontSize: 24)),
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: double.infinity,
+        height: double.infinity,
+        color: _bgColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 40),
 
-          const SizedBox(height: 40),
+            Text(
+              '${state.timeLeft}',
+              style: const TextStyle(fontSize: 40, color: Colors.white),
+            ),
 
-          // Word
-          Text(
-            word,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-          ),
+            Expanded(
+              child: Center(
+                child: Text(
+                  word,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
 
-          const SizedBox(height: 40),
+            Text(
+              'Score: ${state.score}',
+              style: const TextStyle(fontSize: 22, color: Colors.white70),
+            ),
 
-          // Score
-          Text('Score: ${state.score}', style: const TextStyle(fontSize: 24)),
+            const SizedBox(height: 20),
 
-          const SizedBox(height: 20),
+            const Text(
+              'Tilt ↑ Correct | ↓ Skip',
+              style: TextStyle(color: Colors.white54),
+            ),
 
-          const Text(
-            'Tilt Up = Correct ✅\nTilt Down = Skip ❌',
-            textAlign: TextAlign.center,
-          ),
-        ],
+            const SizedBox(height: 30),
+          ],
+        ),
       ),
     );
   }
