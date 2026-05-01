@@ -5,19 +5,21 @@ import 'features/game/screens/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // 🔥 App starts in portrait
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  runApp(const UparNicheApp());
+  runApp(const DaayeBaayeApp());
 }
 
-class UparNicheApp extends StatelessWidget {
-  const UparNicheApp({super.key});
+class DaayeBaayeApp extends StatelessWidget {
+  const DaayeBaayeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'UparNiche',
+      title: 'DaayeBaaye',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
       home: const HomeScreen(),
     );
   }

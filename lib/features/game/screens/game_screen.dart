@@ -34,7 +34,7 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     super.initState();
 
-    // 🔥 Switch to LANDSCAPE for game
+    // 🔥 Switch to LANDSCAPE during game
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
 
     _controller = GameController(WordRepository());
@@ -115,7 +115,7 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void dispose() {
-    // 🔥 Switch back to PORTRAIT
+    // 🔥 Back to portrait when exiting
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     _controller.dispose();
@@ -126,7 +126,7 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Countdown screen (landscape)
+    // Countdown screen
     if (!_gameStarted) {
       return Scaffold(
         body: Container(
