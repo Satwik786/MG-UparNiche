@@ -28,13 +28,12 @@ class _GameScreenState extends State<GameScreen> {
   int _countdown = 3;
   bool _gameStarted = false;
 
-  Color _bgColor = Colors.deepPurple;
+  Color _bgColor = const Color.fromARGB(255, 0, 0, 0);
 
   @override
   void initState() {
     super.initState();
 
-    // 🔥 Switch to LANDSCAPE during game
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
 
     _controller = GameController(WordRepository());
@@ -82,6 +81,8 @@ class _GameScreenState extends State<GameScreen> {
   void _handleCorrect() {
     _canDetect = false;
 
+    HapticFeedback.lightImpact();
+
     setState(() {
       _bgColor = Colors.green;
     });
@@ -92,6 +93,8 @@ class _GameScreenState extends State<GameScreen> {
 
   void _handleSkip() {
     _canDetect = false;
+
+    HapticFeedback.mediumImpact();
 
     setState(() {
       _bgColor = Colors.red;
@@ -115,7 +118,6 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void dispose() {
-    // 🔥 Back to portrait when exiting
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     _controller.dispose();
@@ -126,7 +128,6 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Countdown screen
     if (!_gameStarted) {
       return Scaffold(
         body: Container(
