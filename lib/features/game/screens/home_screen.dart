@@ -4,15 +4,13 @@ import 'package:http/http.dart' as http;
 
 import 'game_screen.dart';
 
-/// ======================================================
-/// 🧩 MODEL
-/// ======================================================
 class Category {
   final String id;
   final String name;
   final String description;
   final String rules;
-  final String image; // ✅ NEW
+  final String image;
+  final String bgImage;
 
   const Category({
     required this.id,
@@ -20,6 +18,7 @@ class Category {
     required this.description,
     required this.rules,
     required this.image,
+    required this.bgImage,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) {
@@ -28,14 +27,12 @@ class Category {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       rules: json['rules'] ?? '',
-      image: json['image'] ?? 'assets/images/default.jpg', // ✅ fallback
+      image: json['image'] ?? 'assets/images/default.png',
+      bgImage: json['bgImage'] ?? 'assets/images/default_bg.png',
     );
   }
 }
 
-/// ======================================================
-/// 🌐 API SERVICE
-/// ======================================================
 class CategoryService {
   static const String _url = 'https://your-api.com/categories';
 
@@ -59,29 +56,29 @@ class CategoryService {
       id: 'general',
       name: 'General',
       description: 'Guess common everyday words and objects.',
-      rules: 'Tilt forward → Correct ✅\nTilt backward → Skip ❌',
+      rules: 'Tilt Right → Correct \nTilt Left → Skip ',
       image: 'assets/images/general.png',
+      bgImage: 'assets/images/generalbg.png',
     ),
     Category(
       id: 'phrases',
       name: 'Indian Phrases',
       description: 'Act out popular Indian phrases and slang.',
-      rules: 'Tilt forward → Correct ✅\nTilt backward → Skip ❌',
-      image: 'assets/images/movie.png',
+      rules: 'Tilt Right → Correct \nTilt Left → Skip ',
+      image: 'assets/images/indian.png',
+      bgImage: 'assets/images/indianbg.png',
     ),
     Category(
       id: 'dialogues',
       name: 'Movie Dialogues',
       description: 'Guess famous movie dialogues.',
-      rules: 'Tilt forward → Correct ✅\nTilt backward → Skip ❌',
+      rules: 'Tilt Right → Correct \nTilt Left → Skip ',
       image: 'assets/images/movie.png',
+      bgImage: 'assets/images/moviebg.png',
     ),
   ];
 }
 
-/// ======================================================
-/// 🏠 HOME SCREEN
-/// ======================================================
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -124,18 +121,16 @@ class _HomeScreenState extends State<HomeScreen> {
             duration: const Duration(milliseconds: 400),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(currentCategory.image),
+                image: AssetImage(currentCategory.bgImage),
                 fit: BoxFit.cover,
               ),
             ),
             child: Container(
-              // 🔥 overlay for readability
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.5)),
+              decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
               child: SafeArea(
                 child: Column(
                   children: [
                     const SizedBox(height: 16),
-
                     const Text(
                       'DaayeBaaye',
                       style: TextStyle(
@@ -144,9 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                       ),
                     ),
-
                     const SizedBox(height: 16),
-
                     Expanded(
                       child: CategoryDeck(
                         categories: categories,
@@ -164,9 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-/// ======================================================
-/// 🎴 DECK
-/// ======================================================
 class CategoryDeck extends StatelessWidget {
   final List<Category> categories;
   final PageController controller;
@@ -207,9 +197,6 @@ class CategoryDeck extends StatelessWidget {
   }
 }
 
-/// ======================================================
-/// 🧱 CATEGORY CARD
-/// ======================================================
 class CategoryCard extends StatelessWidget {
   final Category category;
 
@@ -220,8 +207,8 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => _openDetail(context),
       child: Container(
-        width: 140,
-        height: 170,
+        width: 180,
+        height: 310,
         margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
@@ -237,34 +224,10 @@ class CategoryCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            gradient: LinearGradient(
-              colors: [
-                Colors.black.withOpacity(0.2),
-                Colors.black.withOpacity(0.7),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            category.name.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        ),
       ),
     );
   }
 
-  /// 🔥 DETAIL MODAL
   void _openDetail(BuildContext context) {
     showDialog(
       context: context,
@@ -304,33 +267,19 @@ class CategoryCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              category.name,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
+            const SizedBox(height: 8),
             Text(
               category.description,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
-
             const SizedBox(height: 12),
-
             Text(
               category.rules,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, color: Colors.white70),
+              style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
-
             const SizedBox(height: 20),
-
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,

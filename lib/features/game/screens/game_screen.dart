@@ -104,7 +104,7 @@ class _GameScreenState extends State<GameScreen> {
   void _resetDetection() {
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
-        _bgColor = Colors.deepPurple;
+        _bgColor = const Color.fromARGB(255, 0, 0, 0);
       });
     });
 

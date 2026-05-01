@@ -1,5 +1,6 @@
 import 'dart:async';
 import '../data/repositories/word_repository.dart';
+import '../data/models/word_model.dart';
 import 'game_state.dart';
 
 class GameController {
@@ -21,8 +22,13 @@ class GameController {
 
   GameController(this._repository);
 
-  void startGame(String categoryId) {
-    final words = _repository.getWordsByCategory(categoryId)..shuffle();
+  /// START GAME (NOW ASYNC)
+  Future<void> startGame(String categoryId) async {
+    await _repository.loadWords();
+
+    final words = List<WordModel>.from(
+      _repository.getWordsByCategory(categoryId),
+    )..shuffle();
 
     _state = GameState(
       words: words,
@@ -50,7 +56,18 @@ class GameController {
     });
   }
 
+  /// Prevent running out of words
+  void _ensureMoreWords() {
+    if (_state.currentIndex >= _state.words.length - 1) {
+      final moreWords = List<WordModel>.from(_state.words)..shuffle();
+
+      _state = _state.copyWith(words: [..._state.words, ...moreWords]);
+    }
+  }
+
   void markCorrect() {
+    _ensureMoreWords();
+
     final word = _state.currentWord;
 
     _state = _state.copyWith(
@@ -61,6 +78,8 @@ class GameController {
   }
 
   void skipWord() {
+    _ensureMoreWords();
+
     final word = _state.currentWord;
 
     _state = _state.copyWith(
