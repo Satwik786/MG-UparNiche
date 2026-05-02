@@ -1,6 +1,7 @@
 import '../data/models/word_model.dart';
 
 class GameState {
+  final String categoryId;
   final List<WordModel> words;
   final int currentIndex;
   final int score;
@@ -11,6 +12,7 @@ class GameState {
   final List<WordModel> skippedWords;
 
   const GameState({
+    required this.categoryId,
     required this.words,
     required this.currentIndex,
     required this.score,
@@ -28,6 +30,7 @@ class GameState {
   }
 
   GameState copyWith({
+    String? categoryId,
     List<WordModel>? words,
     int? currentIndex,
     int? score,
@@ -37,6 +40,7 @@ class GameState {
     List<WordModel>? skippedWords,
   }) {
     return GameState(
+      categoryId: categoryId ?? this.categoryId,
       words: words ?? this.words,
       currentIndex: currentIndex ?? this.currentIndex,
       score: score ?? this.score,

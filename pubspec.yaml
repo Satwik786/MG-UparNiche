@@ -1,4 +1,4 @@
-name: headsup
+name: daayebaaye
 description: "A new Flutter project."
 publish_to: 'none'
 
@@ -15,11 +15,18 @@ dependencies:
   sensors_plus: ^4.0.2
   http: ^1.2.1
   cached_network_image: ^3.3.1
+  change_app_package_name: ^1.5.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons: 
+  android: true
+  ios: true
+  image_path: "assets/images/app_icon.png"
 
 flutter:
   uses-material-design: true
@@ -27,3 +34,5 @@ flutter:
   assets:
     - assets/images/
     - assets/data/words.json
+
+  

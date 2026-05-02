@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../logic/game_controller.dart';
 import '../data/repositories/word_repository.dart';
 import '../logic/game_state.dart';
@@ -24,6 +23,7 @@ class _GameScreenState extends State<GameScreen> {
   Timer? _uiTimer;
 
   bool _canDetect = true;
+  bool _navigated = false; // ✅ FIX: prevent multiple navigation
 
   int _countdown = 3;
   bool _gameStarted = false;
@@ -81,7 +81,7 @@ class _GameScreenState extends State<GameScreen> {
   void _handleCorrect() {
     _canDetect = false;
 
-    HapticFeedback.lightImpact();
+    HapticFeedback.heavyImpact();
 
     setState(() {
       _bgColor = Colors.green;
@@ -94,7 +94,7 @@ class _GameScreenState extends State<GameScreen> {
   void _handleSkip() {
     _canDetect = false;
 
-    HapticFeedback.mediumImpact();
+    HapticFeedback.vibrate();
 
     setState(() {
       _bgColor = Colors.red;
@@ -148,14 +148,18 @@ class _GameScreenState extends State<GameScreen> {
 
     final GameState state = _controller.state;
 
-    if (state.isGameOver) {
-      Future.microtask(() {
+    /// ✅ FIXED: Safe navigation (no flicker)
+    if (state.isGameOver && !_navigated) {
+      _navigated = true;
+
+      _uiTimer?.cancel(); // ✅ stop UI updates
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => ResultScreen(state: state)),
         );
       });
-      return const SizedBox();
     }
 
     final word = state.currentWord?.text ?? 'No Words';

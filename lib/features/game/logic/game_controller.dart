@@ -7,6 +7,7 @@ class GameController {
   final WordRepository _repository;
 
   GameState _state = const GameState(
+    categoryId: '',
     words: [],
     currentIndex: 0,
     score: 0,
@@ -31,6 +32,7 @@ class GameController {
     )..shuffle();
 
     _state = GameState(
+      categoryId: categoryId,
       words: words,
       currentIndex: 0,
       score: 0,
