@@ -18,18 +18,18 @@
     "Playing guitar","Drawing sketch","Painting wall","Fixing bulb","Charging laptop",
     "Calling customer care","Waiting for reply","Sending message","Deleting photos","Installing app"
   ],
-
-  "phrases": [
-    "Arre yaar","Kya kar raha hai","Jugaad","Chalta hai","Bhai kya scene hai","Kya baat hai","Full tight","Timepass","Scene kya hai","Mast hai",
-    "Kya bolti public","Setting kar","Aukat mein reh","Bindaas","Fattu mat ban","Chill maar","Tension mat le","Kya solid hai","Full on josh","Apun ko kya",
-    "Jhakkas","Ek number","Bakchodi mat kar","Bhai tu toh pro hai","Kya mast lag raha hai","Scene set hai","Bhai full paisa vasool","Kya hi kar sakte hain","Kya hi bolun","Aaj mood off hai",
-    "Aaj full energy hai","Chal na bhai","Mat kar yaar","Thoda adjust kar","Ho jayega","Dekh lenge","Bindaas reh","Kya level hai","Zyada ho raha hai","Bas kar bhai",
-    "Kya attitude hai","Bhai respect","Full savage","Kya timing hai","Perfect hai","Aisa hi hota hai","Kya luck hai","Kismat kharab hai","Bhai emotional kar diya","Dil se",
-    "Scene tight hai","Bhai serious ho ja","Kya comedy hai","Hasi aa gayi","Kya bakwaas hai","Dimag kharab mat kar","Bhai control kar","Zyada smart mat ban","Seedha bol","Gol gol mat ghumaa",
-    "Seedha point pe aa","Bhai trust kar","Pakad liya","Samajh gaya","Nahi ho payega","Try karte hain","Risk lete hain","Safe khel","Game over","Level up",
-    "Bhai OP","Noob mat ban","Clutch maar","GG bro","Lag gaya","Ho gaya kaam","Khatam tata bye bye","Bhai legend","OP move","Bhai next level",
-    "Full power","Ultra pro","Bhai ek number","Solid hai","Zabardast","Kya scene hai boss","Boss level","Mind blowing","Too good","Ek dum perfect"
-  ],
+    "hero_universe": [
+      "Iron Man","Captain America","Thor","Hulk","Spider-Man","Doctor Strange","Black Panther","Scarlet Witch","Vision","Falcon",
+      "Winter Soldier","Hawkeye","Black Widow","Ant-Man","Wasp","Star-Lord","Gamora","Drax","Rocket","Groot",
+      "Thanos","Loki","Deadpool","Moon Knight","Shang-Chi","Captain Marvel","Wolverine","Storm","Magneto","Cyclops",
+      "Daredevil","Punisher","Ghost Rider","Blade","Silver Surfer","Nick Fury","War Machine","Okoye","Mantis","Nebula",
+      "Yondu","Red Skull","Ultron","Killmonger","Hela","Dormammu","Kang","Green Goblin","Doctor Octopus","Venom",
+      "Miles Morales","Gwen Stacy","Spider-Man 2099","She-Hulk","Kate Bishop","Yelena Belova","Echo","Ms. Marvel","America Chavez","Sersi",
+      "Ikaris","Phastos","Kingo","Sprite","Gilgamesh","Ajak","Black Bolt","Medusa","Crystal","Karnak",
+      "Nova","Adam Warlock","Beta Ray Bill","Quicksilver","Polaris","Jubilee","Nightcrawler","Beast","Rogue","Gambit",
+      "Colossus","Psylocke","Mystique","Sabretooth","Toad","Apocalypse","Mr. Sinister","Taskmaster","Bullseye","Kingpin",
+      "Morbius","Kraven","Shocker","Vulture","Lizard","Sandman","Electro","Agatha Harkness","The Watcher","Ego"
+    ],
 
   "dialogues": [
     "Mogambo khush hua",
@@ -147,18 +147,6 @@
       "tabletop","wall support","chair position","scissors","reverse spooning",
       "cradle","wheelbarrow","modified missionary","raised legs","split position"
   ], 
-  "hero_universe": [
-    "Iron Man","Captain America","Thor","Hulk","Spider-Man","Doctor Strange","Black Panther","Scarlet Witch","Vision","Falcon",
-    "Winter Soldier","Hawkeye","Black Widow","Ant-Man","Wasp","Star-Lord","Gamora","Drax","Rocket","Groot",
-    "Thanos","Loki","Deadpool","Moon Knight","Shang-Chi","Captain Marvel","Wolverine","Storm","Magneto","Cyclops",
-    "Daredevil","Punisher","Ghost Rider","Blade","Silver Surfer","Nick Fury","War Machine","Okoye","Mantis","Nebula",
-    "Yondu","Red Skull","Ultron","Killmonger","Hela","Dormammu","Kang","Green Goblin","Doctor Octopus","Venom",
-    "Miles Morales","Gwen Stacy","Spider-Man 2099","She-Hulk","Kate Bishop","Yelena Belova","Echo","Ms. Marvel","America Chavez","Sersi",
-    "Ikaris","Phastos","Kingo","Sprite","Gilgamesh","Ajak","Black Bolt","Medusa","Crystal","Karnak",
-    "Nova","Adam Warlock","Beta Ray Bill","Quicksilver","Polaris","Jubilee","Nightcrawler","Beast","Rogue","Gambit",
-    "Colossus","Psylocke","Mystique","Sabretooth","Toad","Apocalypse","Mr. Sinister","Taskmaster","Bullseye","Kingpin",
-    "Morbius","Kraven","Shocker","Vulture","Lizard","Sandman","Electro","Agatha Harkness","The Watcher","Ego"
-  ],
 
   "would_you_rather": [
     "Fly or Be Invisible","Rich or Famous","No Phone or No Internet",

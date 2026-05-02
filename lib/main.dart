@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'features/game/screens/home_screen.dart';
+import 'features/game/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 🔥 App starts in portrait
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(const DaayeBaayeApp());
@@ -20,7 +19,7 @@ class DaayeBaayeApp extends StatelessWidget {
       title: 'DaayeBaaye',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

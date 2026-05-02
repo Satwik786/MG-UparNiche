@@ -202,7 +202,7 @@ class _GameScreenState extends State<GameScreen> {
             const SizedBox(height: 20),
 
             const Text(
-              'Tilt ↑ Correct | ↓ Skip',
+              'Tilt ← Correct | → Skip',
               style: TextStyle(color: Colors.white54),
             ),
 

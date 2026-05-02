@@ -36,6 +36,7 @@ lib/
 │       │   ├── game_screen.dart
 │       │   └── result_screen.dart
 |       |   └── premium_deck_screen.dart
+|       |   └── splash_screen.dart
 │       │
 │       └── widgets/
 │           ├── timer_widget.dart

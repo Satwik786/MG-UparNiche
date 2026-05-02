@@ -63,12 +63,12 @@ class CategoryService {
       bgImage: 'assets/images/generalbg.png',
     ),
     Category(
-      id: 'phrases',
-      name: 'Indian Phrases',
-      description: 'Act out popular Indian phrases and slang.',
+      id: 'hero',
+      name: 'Hero Universe',
+      description: 'Guess famous superheroes, villains, and characters.',
       rules: 'Tilt Right → Correct \nTilt Left → Skip ',
-      image: 'assets/images/indian.png',
-      bgImage: 'assets/images/indianbg.png',
+      image: 'assets/images/hero.png',
+      bgImage: 'assets/images/herobg.png',
     ),
     Category(
       id: 'dialogues',
@@ -98,7 +98,12 @@ class CategoryService {
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List<Category> preloadedCategories; // ✅ added
+
+  const HomeScreen({
+    super.key,
+    required this.preloadedCategories, // ✅ added
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -123,53 +128,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ✅ use preloaded data instead of FutureBuilder
+    final categories = widget.preloadedCategories;
+
+    final index = _page.round() % categories.length;
+    final currentCategory = categories[index];
+
     return Scaffold(
-      body: FutureBuilder<List<Category>>(
-        future: CategoryService.fetchCategories(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final categories = snapshot.data!;
-          final index = _page.round() % categories.length;
-          final currentCategory = categories[index];
-
-          return AnimatedContainer(
-            duration: const Duration(milliseconds: 400),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(currentCategory.bgImage),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    const Text(
-                      'DaayeBaaye',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: CategoryDeck(
-                        categories: categories,
-                        controller: _controller,
-                      ),
-                    ),
-                  ],
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 400),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(currentCategory.bgImage),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+          child: SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                const Text(
+                  'DaayeBaaye',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: CategoryDeck(
+                    categories: categories,
+                    controller: _controller,
+                  ),
+                ),
+              ],
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
