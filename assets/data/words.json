@@ -136,7 +136,18 @@
     "Aaj ka din yaad rakha jayega"
   ],
 
-  "hero": [
+   "adult": [
+      "vibrator","dildo","bullet vibrator","dick massager","rabbit vibrator",
+      "clitoral stimulator","finger vibrator","couples vibrator","Edging","butt plug",
+      "anal beads","prostate massager","Testicals","strap-on","cock ring",
+      "vibrating ring","lubricant","water-based lube","silicone lube","massage oil",
+      "condom","flavored condom","dotted condom","blindfold","handcuffs","missionary","doggy style","cowgirl","reverse cowgirl","spooning",
+      "standing","lotus","butterfly","bridge","kneeling",
+      "side-by-side","seated","cross","lap position","edge of bed",
+      "tabletop","wall support","chair position","scissors","reverse spooning",
+      "cradle","wheelbarrow","modified missionary","raised legs","split position"
+  ], 
+  "hero_universe": [
     "Iron Man","Captain America","Thor","Hulk","Spider-Man","Doctor Strange","Black Panther","Scarlet Witch","Vision","Falcon",
     "Winter Soldier","Hawkeye","Black Widow","Ant-Man","Wasp","Star-Lord","Gamora","Drax","Rocket","Groot",
     "Thanos","Loki","Deadpool","Moon Knight","Shang-Chi","Captain Marvel","Wolverine","Storm","Magneto","Cyclops",
@@ -149,15 +160,57 @@
     "Morbius","Kraven","Shocker","Vulture","Lizard","Sandman","Electro","Agatha Harkness","The Watcher","Ego"
   ],
 
-   "adult": [
-      "vibrator","dildo","bullet vibrator","wand massager","rabbit vibrator",
-      "clitoral stimulator","finger vibrator","couples vibrator","wearable vibrator","butt plug",
-      "anal beads","prostate massager","kegel balls","strap-on","cock ring",
-      "vibrating ring","lubricant","water-based lube","silicone lube","massage oil",
-      "condom","flavored condom","ribbed condom","blindfold","handcuffs","missionary","doggy style","cowgirl","reverse cowgirl","spooning",
-      "standing","lotus","butterfly","bridge","kneeling",
-      "side-by-side","seated","cross","lap position","edge of bed",
-      "tabletop","wall support","chair position","scissors","reverse spooning",
-      "cradle","wheelbarrow","modified missionary","raised legs","split position"
+  "would_you_rather": [
+    "Fly or Be Invisible","Rich or Famous","No Phone or No Internet",
+    "Live in Space or Ocean","Always Hot or Cold"
+  ],
+
+  "truth_or_dare": [
+    "Dance for 10 seconds","Sing loudly","Reveal a secret",
+    "Act like a cat","Do 10 pushups"
+  ],
+
+  "funny_moments": [
+    "Slip on Banana","Laugh uncontrollably","Wrong message sent",
+    "Epic fail","Funny teacher moment"
+  ],
+
+  "daily_soap_series": [
+    "Dramatic Entry","Slow Motion Shock","Family Argument",
+    "Big Reveal","Emotional Breakdown"
+  ],
+
+  "couple_goals": [
+    "Candlelight Dinner","Long Drive","Matching Outfits",
+    "Holding Hands","Cute Fight"
+  ],
+
+  "rapid_fire": [
+    "Pizza","Car","Doctor","Mobile","Teacher","Airport","Dog","Selfie"
+  ],
+
+  "challenges": [
+    "Dance Challenge","Pushup Challenge","No Laugh Challenge",
+    "Balance Test","Speed Run"
+  ],
+
+  "never_have_i_ever": [
+    "Lied to Parents","Skipped Class","Watched series all night",
+    "Ate someone else's food","Faked being sick"
+  ],
+
+  "random_crazy": [
+    "Zombie Walk","Alien Talk","Crazy Laugh",
+    "Act like Robot","Run in slow motion"
+  ],
+
+  "pop_culture": [
+    "Viral Meme","Trending Song","Famous Dialogue",
+    "Dance Reel","Influencer Life"
+  ],
+
+  "mystery_mode": [
+    "Unknown Object","Secret Character","Hidden Action",
+    "Random Twist","Surprise Word"
   ]
 }

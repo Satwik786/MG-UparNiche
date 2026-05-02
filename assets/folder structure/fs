@@ -1,0 +1,56 @@
+lib/
+│
+├── main.dart
+│
+├── core/
+│   ├── constants/
+│   │   ├── app_colors.dart
+│   │   ├── app_strings.dart
+│   │   └── app_sizes.dart
+│   │
+│   ├── theme/
+│   │   └── app_theme.dart
+│   │
+│   └── utils/
+│       ├── timer_helper.dart
+│       ├── random_helper.dart
+│       └── extensions.dart
+│
+├── features/
+│   └── game/
+│       ├── data/
+│       │   ├── models/
+│       │   │   ├── word_model.dart
+│       │   │   └── category_model.dart
+│       │   │
+│       │   └── repositories/
+│       │       └── word_repository.dart
+│       │
+│       ├── logic/
+│       │   ├── game_controller.dart
+│       │   └── game_state.dart
+│       │
+│       ├── screens/
+│       │   ├── home_screen.dart
+│       │   ├── category_detail_screen.dart
+│       │   ├── game_screen.dart
+│       │   └── result_screen.dart
+|       |   └── premium_deck_screen.dart
+│       │
+│       └── widgets/
+│           ├── timer_widget.dart
+│           ├── score_display.dart
+│           └── word_card.dart
+│
+├── shared/
+│   ├── widgets/
+│   │   ├── primary_button.dart
+│   │   └── custom_card.dart
+│   │
+│   └── services/
+│       ├── sensor_service.dart
+│       └── sound_service.dart
+│
+└── l10n/
+    ├── app_en.arb
+    └── app_hi.arb

@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'game_screen.dart';
+import 'premium_deck_screen.dart';
+
+const double cardAspectRatio = 180 / 310;
 
 class Category {
   final String id;
@@ -74,6 +77,22 @@ class CategoryService {
       rules: 'Tilt Right → Correct \nTilt Left → Skip ',
       image: 'assets/images/movie.png',
       bgImage: 'assets/images/moviebg.png',
+    ),
+    Category(
+      id: 'adult',
+      name: 'Adult 18+',
+      description: 'Spicy and bold content for adults only.',
+      rules: 'Tilt Right → Correct \nTilt Left → Skip ',
+      image: 'assets/images/adult.png',
+      bgImage: 'assets/images/adultbg.png',
+    ),
+    Category(
+      id: 'premium',
+      name: 'Premium Deck',
+      description: 'Unlock exclusive premium categories.',
+      rules: 'Tap to explore premium decks',
+      image: 'assets/images/premium.png',
+      bgImage: 'assets/images/premiumbg.png',
     ),
   ];
 }
@@ -196,104 +215,155 @@ class CategoryDeck extends StatelessWidget {
   }
 }
 
-class CategoryCard extends StatelessWidget {
+class CategoryCard extends StatefulWidget {
   final Category category;
 
   const CategoryCard({super.key, required this.category});
 
   @override
+  State<CategoryCard> createState() => _CategoryCardState();
+}
+
+class _CategoryCardState extends State<CategoryCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  bool _isFront = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
+  }
+
+  void _flip() {
+    if (_isFront) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
+    _isFront = !_isFront;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onPlay(BuildContext context) {
+    if (widget.category.id == 'premium') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const PremiumDeckScreen()),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => GameScreen(categoryId: widget.category.id),
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _openDetail(context),
+      onTap: _flip,
       child: Container(
         width: 180,
-        height: 310,
         margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          image: DecorationImage(
-            image: AssetImage(category.image),
-            fit: BoxFit.cover,
+        child: AspectRatio(
+          aspectRatio: cardAspectRatio,
+          child: AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              final angle = _animation.value * 3.1416;
+
+              return Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..rotateY(angle),
+                child: _animation.value < 0.5
+                    ? _buildFront()
+                    : Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()..rotateY(3.1416),
+                        child: _buildBack(context),
+                      ),
+              );
+            },
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
         ),
       ),
     );
   }
 
-  void _openDetail(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.6),
-      builder: (_) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding: const EdgeInsets.all(16),
-          child: TweenAnimationBuilder(
-            duration: const Duration(milliseconds: 250),
-            tween: Tween(begin: 0.8, end: 1.0),
-            builder: (context, scale, child) {
-              return Transform.scale(scale: scale, child: child);
-            },
-            child: _expandedCard(context),
+  Widget _buildFront() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        image: DecorationImage(
+          image: AssetImage(widget.category.image),
+          fit: BoxFit.cover,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 
-  Widget _expandedCard(BuildContext context) {
+  Widget _buildBack(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(18),
         image: DecorationImage(
-          image: AssetImage(category.image),
+          image: AssetImage(widget.category.image),
           fit: BoxFit.cover,
         ),
       ),
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          color: Colors.black.withOpacity(0.6),
+          borderRadius: BorderRadius.circular(18),
+          color: Colors.black.withOpacity(0.7),
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 8),
             Text(
-              category.description,
+              widget.category.description,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 16, color: Colors.white),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
             Text(
-              category.rules,
+              widget.category.rules,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, color: Colors.white),
+              style: const TextStyle(color: Colors.white70, fontSize: 12),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             ElevatedButton(
+              onPressed: () => _onPlay(context),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
               ),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => GameScreen(categoryId: category.id),
-                  ),
-                );
-              },
-              child: const Text('PLAY'),
+              child: const Text("PLAY"),
             ),
           ],
         ),
