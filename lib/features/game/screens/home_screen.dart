@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    _controller = PageController(viewportFraction: 0.7, initialPage: 1000);
+    _controller = PageController(viewportFraction: 0.72, initialPage: 1000);
 
     _controller.addListener(() {
       setState(() {
@@ -183,6 +183,13 @@ class CategoryDeck extends StatelessWidget {
     required this.controller,
   });
 
+  double _page(PageController controller) {
+    if (!controller.hasClients || controller.page == null) {
+      return controller.initialPage.toDouble();
+    }
+    return controller.page!;
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
@@ -196,7 +203,7 @@ class CategoryDeck extends StatelessWidget {
             double scale = 1.0;
 
             if (controller.position.haveDimensions) {
-              scale = controller.page! - index;
+              scale = _page(controller) - index;
               scale = (1 - (scale.abs() * 0.2)).clamp(0.85, 1.0);
             }
 
@@ -256,12 +263,92 @@ class _CategoryCardState extends State<CategoryCard>
     super.dispose();
   }
 
-  void _onPlay(BuildContext context) {
-    if (widget.category.id == 'premium') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const PremiumDeckScreen()),
+  void _onPlay(BuildContext context) async {
+    if (widget.category.id == 'premium' || widget.category.id == 'adult') {
+      final controller = TextEditingController();
+
+      final result = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            title: Text(
+              widget.category.id == 'premium'
+                  ? "Enter Premium Password"
+                  : "18+ Access",
+              style: const TextStyle(color: Colors.white),
+            ),
+            content: TextField(
+              controller: controller,
+              obscureText: true,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: "Password",
+                hintStyle: const TextStyle(color: Colors.white54),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.white24),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  bool correctPassword = false;
+
+                  if (widget.category.id == 'premium' &&
+                      controller.text == "12sr") {
+                    correctPassword = true;
+                  }
+
+                  if (widget.category.id == 'adult' &&
+                      controller.text == "26as") {
+                    correctPassword = true;
+                  }
+
+                  if (correctPassword) {
+                    Navigator.pop(context, true);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Wrong Password")),
+                    );
+                  }
+                },
+                child: const Text("Unlock"),
+              ),
+            ],
+          );
+        },
       );
+
+      if (result == true) {
+        if (widget.category.id == 'premium') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const PremiumDeckScreen()),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => GameScreen(categoryId: widget.category.id),
+            ),
+          );
+        }
+      }
     } else {
       Navigator.push(
         context,
@@ -277,7 +364,7 @@ class _CategoryCardState extends State<CategoryCard>
     return GestureDetector(
       onTap: _flip,
       child: Container(
-        width: 180,
+        width: 200,
         margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 20),
         child: AspectRatio(
           aspectRatio: cardAspectRatio,

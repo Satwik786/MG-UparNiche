@@ -123,22 +123,16 @@ class _SplashScreenState extends State<SplashScreen>
     return Stack(
       children: [
         Center(
-          child: Lottie.asset(
-            'assets/animations/splash.json',
-            fit: BoxFit.contain,
-          ),
-        ),
-        Center(
-          child: Text(
-            "DAAYE BAAYE",
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.18),
-              fontSize: 42,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 5,
+          child: SizedBox(
+            width: 320,
+            height: 320,
+            child: Lottie.asset(
+              'assets/animations/splash.json',
+              fit: BoxFit.cover,
             ),
           ),
         ),
+
         Positioned(
           bottom: 30,
           left: 0,

@@ -7,7 +7,6 @@ class PremiumDeckScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final premiumCategories = [
-      {"id": "hero_universe", "name": "Hero Universe"},
       {"id": "would_you_rather", "name": "Would You Rather?"},
       {"id": "truth_or_dare", "name": "Truth or Dare"},
       {"id": "funny_moments", "name": "Funny Moments"},
